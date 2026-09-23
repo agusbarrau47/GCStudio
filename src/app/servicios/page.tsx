@@ -25,11 +25,11 @@ export default async function ServiciosPage() {
         <section className="relative overflow-hidden py-16">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -top-40 right-[-10%] h-[500px] w-[500px] rounded-full bg-gradient-to-br from-gold/15 to-blush/25 blur-[140px]"
+            className="pointer-events-none absolute -top-40 right-[-10%] h-[500px] w-[500px] rounded-full bg-gradient-to-br from-gold/15 to-blush/25 blur-3xl transform-gpu will-change-transform"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute bottom-0 left-[-10%] h-[400px] w-[400px] rounded-full bg-gradient-to-tr from-wine/10 via-blush/15 to-transparent blur-[130px]"
+            className="pointer-events-none absolute bottom-0 left-[-10%] h-[400px] w-[400px] rounded-full bg-gradient-to-tr from-wine/10 via-blush/15 to-transparent blur-3xl transform-gpu will-change-transform"
           />
 
           <div className="shell text-center">

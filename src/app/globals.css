@@ -11,14 +11,7 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   *,
   *::before,
   *::after {
@@ -53,11 +46,11 @@ body {
   }
 
   .surface {
-    @apply rounded-[22px] border border-[#EBE1D4] bg-white/90 backdrop-blur-xl shadow-[0_4px_24px_-10px_rgba(60,40,20,0.04)] transition-all duration-300 hover:border-[#DECBB5] hover:shadow-[0_8px_30px_-10px_rgba(60,40,20,0.08)];
+    @apply rounded-[22px] border border-[#EBE1D4] bg-white shadow-[0_4px_24px_-10px_rgba(60,40,20,0.04)] transition-[transform,border-color,box-shadow] duration-200 hover:border-[#DECBB5] hover:shadow-[0_8px_30px_-10px_rgba(60,40,20,0.08)];
   }
 
   .surface-elevated {
-    @apply rounded-[24px] border border-[#E8DDD0] bg-white/95 backdrop-blur-xl shadow-[0_16px_40px_-16px_rgba(70,45,25,0.07)] transition-all duration-300;
+    @apply rounded-[24px] border border-[#E8DDD0] bg-white shadow-[0_16px_40px_-16px_rgba(70,45,25,0.07)] transition-[transform,border-color,box-shadow] duration-200;
   }
 
   .eyebrow {
@@ -65,11 +58,11 @@ body {
   }
 
   .btn {
-    @apply inline-flex min-h-[48px] items-center justify-center text-center leading-none gap-2 rounded-full px-7 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] indent-[0.16em] transition-all duration-300 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50;
+    @apply inline-flex min-h-[48px] items-center justify-center text-center leading-none gap-2 rounded-full px-7 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] indent-[0.16em] transition-[transform,background-color,border-color,box-shadow] duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50;
   }
 
   .btn-primary {
-    @apply btn bg-gradient-to-r from-[#FAF2E1]/55 via-[#F4E7CE]/50 to-[#EBD6B0]/55 backdrop-blur-md text-[#2C2114] font-bold border border-[#DEC498]/45 shadow-[0_4px_16px_-4px_rgba(215,185,130,0.14)] hover:from-[#FCF7ED]/75 hover:via-[#F8EEDC]/70 hover:to-[#F1E0C4]/75 hover:border-[#D6B886]/65 hover:shadow-[0_6px_20px_-4px_rgba(215,185,130,0.22)] hover:-translate-y-0.5;
+    @apply btn bg-gradient-to-r from-[#FAF2E1] via-[#F4E7CE] to-[#EBD6B0] text-[#2C2114] font-bold border border-[#DEC498] shadow-[0_4px_16px_-4px_rgba(215,185,130,0.14)] hover:from-[#FCF7ED] hover:via-[#F8EEDC] hover:to-[#F1E0C4] hover:border-[#D6B886] hover:shadow-[0_6px_20px_-4px_rgba(215,185,130,0.22)] hover:-translate-y-0.5;
   }
 
   .btn-wine,
@@ -79,7 +72,7 @@ body {
   }
 
   .btn-ghost {
-    @apply btn border border-[#E2D6C6] bg-white/70 backdrop-blur-sm text-ink/90 shadow-[0_2px_8px_-2px_rgba(40,30,20,0.04)] hover:bg-white hover:border-gold hover:text-gold-dark hover:shadow-[0_4px_14px_-2px_rgba(201,164,92,0.18)] hover:-translate-y-0.5;
+    @apply btn border border-[#E2D6C6] bg-white text-ink/90 shadow-[0_2px_8px_-2px_rgba(40,30,20,0.04)] hover:bg-white hover:border-gold hover:text-gold-dark hover:shadow-[0_4px_14px_-2px_rgba(201,164,92,0.18)] hover:-translate-y-0.5;
   }
 
   .btn-sm {

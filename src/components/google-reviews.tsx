@@ -84,13 +84,13 @@ export function GoogleReviews({
                 {/* Resalte si existe */}
                 {rev.highlight && (
                   <p className="mt-3 font-display text-base text-ink font-semibold leading-snug">
-                    "{rev.highlight}"
+                    &ldquo;{rev.highlight}&rdquo;
                   </p>
                 )}
 
                 {/* Texto de la opinión */}
                 <p className="mt-2.5 text-xs text-ink/75 leading-relaxed italic">
-                  "{rev.text}"
+                  &ldquo;{rev.text}&rdquo;
                 </p>
               </div>
 

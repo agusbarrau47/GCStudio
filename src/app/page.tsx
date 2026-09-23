@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { BrandIntro } from "@/components/brand-intro";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CourseCard } from "@/components/course-card";
@@ -15,7 +14,6 @@ export default async function LandingPage() {
 
   return (
     <>
-      <BrandIntro />
       <SiteHeader authed={authed} />
       <main className="pt-16">
         <Hero />
@@ -52,11 +50,11 @@ function Hero() {
     <section className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-center overflow-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 right-[-10%] h-[520px] w-[520px] rounded-full bg-gradient-to-br from-gold/15 to-blush/25 blur-[140px]"
+        className="pointer-events-none absolute -top-40 right-[-10%] h-[520px] w-[520px] rounded-full bg-gradient-to-br from-gold/15 to-blush/25 blur-3xl transform-gpu will-change-transform"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-[-10%] h-[420px] w-[420px] rounded-full bg-gradient-to-tr from-wine/10 via-blush/15 to-transparent blur-[130px]"
+        className="pointer-events-none absolute bottom-0 left-[-10%] h-[420px] w-[420px] rounded-full bg-gradient-to-tr from-wine/10 via-blush/15 to-transparent blur-3xl transform-gpu will-change-transform"
       />
       <div className="shell grid flex-1 items-center gap-12 py-16 lg:grid-cols-[1.5fr_0.8fr]">
         <div className="animate-fade-up">
@@ -135,7 +133,7 @@ function Hero() {
         className="relative flex items-center gap-0 overflow-hidden border-y border-ink/10 py-4 bg-cream-100/40"
         aria-label="Servicios y especialidades."
       >
-        <div className="flex shrink-0 animate-rail gap-8 pr-8 hover:[animation-play-state:paused] motion-reduce:animate-none motion-reduce:flex-wrap">
+        <div className="flex shrink-0 animate-rail will-change-transform gap-8 pr-8 hover:[animation-play-state:paused] motion-reduce:animate-none motion-reduce:flex-wrap">
           {[...RAIL, ...RAIL].map((item, i) => (
             <span
               key={i}
