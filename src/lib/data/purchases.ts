@@ -23,7 +23,7 @@ export async function createPendingPurchase(
   userId: string,
   productId: string
 ): Promise<NewPurchase | null> {
-  const product = getProduct(productId);
+  const product = await getProduct(productId);
   if (!product) return null;
 
   const purchaseId = randomUUID();
@@ -111,7 +111,7 @@ export async function markPurchasePaidAndEnroll(
   // Expandir productos → cursos y crear enrollments (upsert = idempotente).
   const courseIds = new Set<string>();
   for (const item of purchase.purchase_items ?? []) {
-    const product = getProduct(item.product_id);
+    const product = await getProduct(item.product_id);
     product?.grants.forEach((c) => courseIds.add(c));
   }
 
@@ -136,7 +136,7 @@ export async function mockGrantAccess(
   productId: string,
   purchaseId: string
 ): Promise<void> {
-  const product = getProduct(productId);
+  const product = await getProduct(productId);
   if (!product) return;
   const existing = mockStore.getPurchases(userId).find((p) => p.id === purchaseId);
   if (existing) existing.status = "paid";

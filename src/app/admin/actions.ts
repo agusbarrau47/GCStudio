@@ -9,6 +9,7 @@ import {
   adminSetCourseVideoAsset,
   adminSetLessonTimestamps,
 } from "@/lib/data/admin";
+import { adminSetPricing } from "@/lib/data/pricing";
 
 async function ensureAdmin() {
   if (!(await isAdmin())) throw new Error("No autorizado");
@@ -66,5 +67,29 @@ export async function updateLessonTimestamps(input: z.infer<typeof timestampSche
   const data = timestampSchema.parse(input);
   await adminSetLessonTimestamps(data.lessonId, data.start, data.end);
   revalidatePath(`/admin/cursos/${data.courseId}`);
+  return { ok: true };
+}
+
+
+const priceVal = z.number().int().nonnegative().nullable();
+const pricingSchema = z
+  .object({
+    laminadoOnline: priceVal,
+    liftingOnline: priceVal,
+    bundleOnline: priceVal,
+    laminadoPresencial: priceVal,
+    liftingPresencial: priceVal,
+    bundlePresencial: priceVal,
+  })
+  .partial();
+
+export async function updatePricing(input: z.infer<typeof pricingSchema>) {
+  await ensureAdmin();
+  const data = pricingSchema.parse(input);
+  await adminSetPricing(data);
+  revalidatePath("/");
+  revalidatePath("/cursos");
+  revalidatePath("/admin/precios");
+  revalidatePath("/admin/cursos");
   return { ok: true };
 }

@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 const SUBNAV = [
   { label: "Resumen", href: "/admin" },
   { label: "Cursos", href: "/admin/cursos" },
+  { label: "Precios", href: "/admin/precios" },
   { label: "Alumnos", href: "/admin/alumnos" },
 ];
 

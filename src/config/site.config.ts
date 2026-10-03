@@ -1,15 +1,20 @@
 /**
  * CONFIGURACIÓN CENTRAL DE GCStudio.
  *
- * Todo dato comercial que FALTA se marca explícitamente aquí y se documenta en SETUP.md.
- * NO se inventan precios, políticas ni datos fiscales. Completá los campos marcados FALTANTE.
+ * Los precios viven en la DB (tabla `pricing`) y se editan desde /admin/precios.
+ * Los valores de abajo son los DEFAULTS/fallback (se usan si la DB no responde
+ * o en modo mock). La fuente autoritativa en runtime es getPricing() (src/lib/data/pricing.ts).
  */
 
 export type PricingConfig = {
-  /** Precio en ARS. null = FALTANTE (se muestra "Precio a confirmar"). */
+  /** Precios ONLINE en ARS. null = "Precio a confirmar". */
   laminadoArs: number | null;
   liftingArs: number | null;
   bundleArs: number | null;
+  /** Precios PRESENCIAL en ARS (reserva por WhatsApp). null = "Precio a confirmar". */
+  laminadoPresencialArs: number | null;
+  liftingPresencialArs: number | null;
+  bundlePresencialArs: number | null;
   currency: "ARS";
 };
 
@@ -46,11 +51,14 @@ export const siteConfig = {
   // URL pública de la app. Se sobreescribe con NEXT_PUBLIC_APP_URL en producción.
   appUrl: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
 
-  // Precios: FALTANTE. Cargalos acá cuando Geraldine los defina (ver SETUP.md §Precios).
+  // DEFAULTS de precios (fallback). Editables en vivo desde /admin/precios.
   pricing: {
-    laminadoArs: null,
-    liftingArs: null,
-    bundleArs: null,
+    laminadoArs: 40000,
+    liftingArs: 40000,
+    bundleArs: 55000,
+    laminadoPresencialArs: 90000,
+    liftingPresencialArs: 90000,
+    bundlePresencialArs: 125000,
     currency: "ARS",
   } as PricingConfig,
 

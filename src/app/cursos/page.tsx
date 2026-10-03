@@ -5,7 +5,9 @@ import { SiteFooter } from "@/components/site-footer";
 import { CourseCard } from "@/components/course-card";
 import { COURSES } from "@/content/courses";
 import { getCurrentProfile } from "@/lib/auth/session";
-import { siteConfig } from "@/config/site.config";
+import { siteConfig, formatPrice } from "@/config/site.config";
+import { getPricing } from "@/lib/data/pricing";
+import { onlinePriceFor } from "@/lib/commerce/pricing";
 
 export const metadata: Metadata = {
   title: "Cursos y Formación Profesional — GC Studio Academia",
@@ -16,6 +18,7 @@ export const metadata: Metadata = {
 export default async function CursosPage() {
   const profile = await getCurrentProfile();
   const authed = !!profile;
+  const pricing = await getPricing();
 
   return (
     <>
@@ -135,7 +138,7 @@ export default async function CursosPage() {
 
             <div className="mt-12 grid gap-8 md:grid-cols-2">
               {COURSES.map((c) => (
-                <CourseCard key={c.id} course={c} />
+                <CourseCard key={c.id} course={c} onlineArs={onlinePriceFor(c.id, pricing)} />
               ))}
             </div>
           </div>
@@ -190,6 +193,19 @@ export default async function CursosPage() {
                 <p className="text-xs text-ink/65 leading-relaxed">
                   Ahorrá tiempo y dinero aprendiendo las dos técnicas complementarias que tus clientas piden juntas en cabina.
                 </p>
+                <div className="pt-3 border-t border-ink/10 text-sm">
+                  <p className="text-ink/60">
+                    Online:{" "}
+                    <span className="font-display text-xl text-gold-dark font-bold">
+                      {formatPrice(pricing.bundleOnline)}
+                    </span>
+                  </p>
+                  <p className="mt-1 text-ink/60">
+                    Presencial:{" "}
+                    <span className="font-semibold text-ink">{formatPrice(pricing.bundlePresencial)}</span>{" "}
+                    <span className="text-ink/40">(reservá por WhatsApp)</span>
+                  </p>
+                </div>
                 <div className="pt-2 border-t border-ink/10">
                   <span className="inline-block rounded-full bg-gold/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-gold-dark font-bold border border-gold/25">
                     Ideal para comenzar tu negocio
@@ -265,15 +281,18 @@ export default async function CursosPage() {
                 <div className="mt-8 pt-6 border-t border-ink/10 flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div>
                     <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink/50 block">
-                      Lugar & Formato
+                      Inversión Presencial
                     </span>
-                    <span className="text-xs font-semibold text-ink">
+                    <span className="block font-display text-2xl text-gold-dark font-bold">
+                      {formatPrice(pricing.liftingPresencial)}
+                    </span>
+                    <span className="mt-1 block text-[11px] text-ink/60">
                       Arenales 1999, Recoleta · 1 Jornada VIP
                     </span>
                   </div>
                   <a
                     href={`https://wa.me/5491164857085?text=${encodeURIComponent(
-                      "Hola Geraldine! Me interesa coordinar fecha para el Curso Presencial 1 a 1 de Lash Lifting & Botox en el estudio de Recoleta. ¿Qué fechas tienen disponibles?"
+                      `Hola Geraldine! Me interesa coordinar fecha para el Curso Presencial 1 a 1 de Lash Lifting & Botox en el estudio de Recoleta (valor de referencia: ${formatPrice(pricing.liftingPresencial)}). ¿Qué fechas tienen disponibles?`
                     )}`}
                     target="_blank"
                     rel="noreferrer"
@@ -331,15 +350,18 @@ export default async function CursosPage() {
                 <div className="mt-8 pt-6 border-t border-ink/10 flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div>
                     <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink/50 block">
-                      Lugar & Formato
+                      Inversión Presencial
                     </span>
-                    <span className="text-xs font-semibold text-ink">
+                    <span className="block font-display text-2xl text-gold-dark font-bold">
+                      {formatPrice(pricing.laminadoPresencial)}
+                    </span>
+                    <span className="mt-1 block text-[11px] text-ink/60">
                       Arenales 1999, Recoleta · 1 Jornada VIP
                     </span>
                   </div>
                   <a
                     href={`https://wa.me/5491164857085?text=${encodeURIComponent(
-                      "Hola Geraldine! Me interesa coordinar fecha para el Curso Presencial 1 a 1 de Laminado de Cejas & Visagismo con Hilo en Recoleta. ¿Qué fechas tienen disponibles?"
+                      `Hola Geraldine! Me interesa coordinar fecha para el Curso Presencial 1 a 1 de Laminado de Cejas & Visagismo con Hilo en Recoleta (valor de referencia: ${formatPrice(pricing.laminadoPresencial)}). ¿Qué fechas tienen disponibles?`
                     )}`}
                     target="_blank"
                     rel="noreferrer"

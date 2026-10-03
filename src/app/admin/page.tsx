@@ -40,6 +40,13 @@ export default async function AdminOverviewPage() {
           </p>
           <p className="mt-3 font-mono text-xs text-gold-dark/70">{COURSES.length} cursos →</p>
         </Link>
+        <Link href="/admin/precios" className="surface p-6 transition-transform hover:-translate-y-1">
+          <h2 className="font-display text-xl text-ink">Precios</h2>
+          <p className="mt-2 text-sm text-ink/60">
+            Editar precios online y presenciales de cada curso y del bundle.
+          </p>
+          <p className="mt-3 font-mono text-xs text-gold-dark/70">Modificar valores →</p>
+        </Link>
         <Link href="/admin/alumnos" className="surface p-6 transition-transform hover:-translate-y-1">
           <h2 className="font-display text-xl text-ink">Alumnos</h2>
           <p className="mt-2 text-sm text-ink/60">

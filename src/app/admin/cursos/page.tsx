@@ -4,11 +4,14 @@ import { COURSES, countLessons } from "@/content/courses";
 import { getCourseStatus } from "@/lib/data/admin";
 import { CourseStatusToggle } from "@/components/admin/course-status-toggle";
 import { formatPrice } from "@/config/site.config";
+import { getPricing } from "@/lib/data/pricing";
+import { onlinePriceFor } from "@/lib/commerce/pricing";
 
 export const metadata: Metadata = { title: "Admin · Cursos" };
 export const dynamic = "force-dynamic";
 
 export default async function AdminCoursesPage() {
+  const pricing = await getPricing();
   const rows = await Promise.all(
     COURSES.map(async (c) => ({ course: c, status: await getCourseStatus(c.id) }))
   );
@@ -29,7 +32,7 @@ export default async function AdminCoursesPage() {
               <div>
                 <h2 className="font-display text-xl text-ink">{course.title}</h2>
                 <p className="font-mono text-xs text-ink/50">
-                  {course.modules.length} módulos · {countLessons(course)} clases · {formatPrice(course.priceArs)}
+                  {course.modules.length} módulos · {countLessons(course)} clases · {formatPrice(onlinePriceFor(course.id, pricing))}
                 </p>
               </div>
             </div>

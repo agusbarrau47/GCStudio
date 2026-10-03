@@ -4,7 +4,14 @@ import { countLessons } from "@/content/courses";
 import { formatDuration } from "@/lib/utils";
 import { formatPrice } from "@/config/site.config";
 
-export function CourseCard({ course }: { course: Course }) {
+export function CourseCard({
+  course,
+  onlineArs,
+}: {
+  course: Course;
+  onlineArs?: number | null;
+}) {
+  const price = onlineArs !== undefined ? onlineArs : course.priceArs;
   const lessons = countLessons(course);
   return (
     <article className="surface group flex flex-col overflow-hidden">
@@ -33,7 +40,7 @@ export function CourseCard({ course }: { course: Course }) {
         </dl>
         <div className="mt-5 flex items-center justify-between">
           <span className="font-display text-xl text-gold-dark">
-            {formatPrice(course.priceArs)}
+            {formatPrice(price)}
           </span>
           <Link href={`/cursos/${course.slug}`} className="btn-ghost btn-sm">
             Ver curso

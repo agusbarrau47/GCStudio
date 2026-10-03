@@ -9,6 +9,8 @@ import { getCurrentProfile } from "@/lib/auth/session";
 import { getEnrollments } from "@/lib/data/access";
 import { canAccessCourse } from "@/lib/domain/access";
 import { formatPrice, siteConfig } from "@/config/site.config";
+import { getPricing } from "@/lib/data/pricing";
+import { onlinePriceFor, presencialPriceFor } from "@/lib/commerce/pricing";
 import { formatDuration } from "@/lib/utils";
 import { CheckoutButton } from "@/components/checkout-button";
 
@@ -58,6 +60,9 @@ export default async function CourseSalesPage({
   }
 
   const lessons = countLessons(course);
+  const pricing = await getPricing();
+  const onlineArs = onlinePriceFor(course.id, pricing);
+  const presencialArs = presencialPriceFor(course.id, pricing);
 
   return (
     <>
@@ -89,12 +94,15 @@ export default async function CourseSalesPage({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={course.coverImage} alt={course.title} className="h-full w-full object-cover" />
               </div>
-              <p className="mt-5 font-display text-3xl text-gold-dark">
-                {formatPrice(course.priceArs)}
+              <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.16em] text-ink/45">
+                Cursá 100% online
               </p>
-              {course.priceArs == null && (
+              <p className="font-display text-3xl text-gold-dark">
+                {formatPrice(onlineArs)}
+              </p>
+              {onlineArs == null && (
                 <p className="mt-1 text-xs text-ink/40">
-                  Cargá el precio en site.config.ts (ver SETUP.md).
+                  Cargá el precio en Admin → Precios.
                 </p>
               )}
 
@@ -157,6 +165,11 @@ export default async function CourseSalesPage({
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-wine font-bold">
                   ¿Preferís práctica 1 a 1 presencial?
                 </p>
+                {presencialArs != null && (
+                  <p className="mt-2 font-display text-xl text-wine">
+                    {formatPrice(presencialArs)}
+                  </p>
+                )}
                 <p className="mt-1 text-[11px] leading-relaxed text-ink/70">
                   También dictamos Masterclasses intensivas en nuestro estudio de Recoleta (Arenales 1999) con modelo viva y kit completo.
                 </p>
@@ -286,6 +299,7 @@ async function BundlePage({ authed }: { authed: boolean }) {
     owned = enrollments.filter((e) => e.status === "active").map((e) => e.courseId);
   }
   const hasBoth = BUNDLE.courseIds.every((id) => owned.includes(id));
+  const pricing = await getPricing();
 
   return (
     <>
@@ -304,8 +318,16 @@ async function BundlePage({ authed }: { authed: boolean }) {
               Acceso a los dos cursos de GC Studio: Laminado de Cejas y Lifting de Pestañas.
               9 módulos y 24 clases en total, con todos los recursos.
             </p>
-            <p className="mt-6 font-display text-3xl text-gold-dark">
-              {formatPrice(BUNDLE.priceArs)}
+            <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.16em] text-ink/45">
+              Online (acceso de por vida al campus)
+            </p>
+            <p className="font-display text-3xl text-gold-dark">
+              {formatPrice(pricing.bundleOnline)}
+            </p>
+            <p className="mt-2 text-sm text-ink/60">
+              Presencial (1 a 1 en Recoleta):{" "}
+              <span className="font-semibold text-ink">{formatPrice(pricing.bundlePresencial)}</span>{" "}
+              <span className="text-ink/40">· reservá por WhatsApp</span>
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               {hasBoth ? (
