@@ -10,6 +10,7 @@ const SUBNAV = [
   { label: "Cursos", href: "/admin/cursos" },
   { label: "Precios", href: "/admin/precios" },
   { label: "Tienda", href: "/admin/productos" },
+  { label: "Órdenes", href: "/admin/ordenes" },
   { label: "Alumnos", href: "/admin/alumnos" },
 ];
 

@@ -160,6 +160,7 @@ export interface CourseProgress {
 export interface Purchase {
   id: string;
   userId: string;
+  kind?: string;
   status: PurchaseStatus;
   amountArs: number | null;
   provider: string;

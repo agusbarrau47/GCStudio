@@ -156,13 +156,14 @@ export async function getPurchaseById(
   if (!supabase) return null;
   const { data } = await supabase
     .from("purchases")
-    .select("id, user_id, status, amount_ars, provider, provider_ref, created_at, purchase_items(product_id, title, amount_ars)")
+    .select("id, user_id, kind, status, amount_ars, provider, provider_ref, created_at, purchase_items(product_id, title, amount_ars)")
     .eq("id", purchaseId)
     .single();
   if (!data) return null;
   return {
     id: data.id,
     userId: data.user_id,
+    kind: data.kind,
     status: data.status,
     amountArs: data.amount_ars,
     provider: data.provider,

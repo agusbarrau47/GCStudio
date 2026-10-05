@@ -12,14 +12,21 @@ export default async function CheckoutSuccessPage({
   const profile = await getCurrentProfile();
   const record = profile && purchase ? await getPurchaseById(purchase, profile.id) : null;
   const paid = record?.status === "paid";
+  const isProduct =
+    record?.kind === "product" ||
+    (record?.items?.some((i) => i.productId === "shipping" || i.productId.startsWith("prod-")) ?? false);
 
   return (
     <AuthShell
       title={paid ? "¡Listo!" : "Recibimos tu compra"}
       subtitle={
-        paid
-          ? "Tu acceso quedó habilitado."
-          : "Estamos confirmando el pago. En cuanto se acredite, verás el curso en tu campus."
+        isProduct
+          ? paid
+            ? "Tu pago fue acreditado. Coordinamos la entrega a la brevedad."
+            : "Estamos confirmando el pago. En cuanto se acredite, coordinamos la entrega."
+          : paid
+            ? "Tu acceso quedó habilitado."
+            : "Estamos confirmando el pago. En cuanto se acredite, verás el curso en tu campus."
       }
     >
       <div className="space-y-4">
@@ -38,8 +45,8 @@ export default async function CheckoutSuccessPage({
             </p>
           </div>
         )}
-        <Link href="/dashboard" className="btn-primary w-full">
-          Ir a mi campus
+        <Link href={isProduct ? "/productos" : "/dashboard"} className="btn-primary w-full">
+          {isProduct ? "Seguir comprando" : "Ir a mi campus"}
         </Link>
       </div>
     </AuthShell>

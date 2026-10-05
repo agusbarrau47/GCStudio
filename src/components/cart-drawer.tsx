@@ -202,17 +202,24 @@ export function CartDrawer() {
               </span>
             </div>
 
-            {/* Checkout Button */}
+            {/* Checkout */}
+            <Link
+              href="/checkout/tienda"
+              onClick={closeCart}
+              className="btn-primary w-full shadow-md text-center justify-center"
+            >
+              Pagar con Mercado Pago
+            </Link>
             <button
               type="button"
               onClick={handleCheckoutWhatsApp}
-              className="btn-primary w-full shadow-md"
+              className="btn-ghost btn-sm w-full justify-center"
             >
-              Comprar por WhatsApp directo
+              O coordinar por WhatsApp
             </button>
 
             <p className="text-center text-[10px] text-ink/50 leading-tight">
-              Aceptamos transferencia bancaria y Mercado Pago. Al enviar tu pedido coordinamos el pago y despacho inmediato.
+              Pago online seguro con Mercado Pago (tarjeta, débito o dinero en cuenta). El despacho se coordina al acreditarse el pago.
             </p>
           </div>
         )}

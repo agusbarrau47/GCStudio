@@ -11,6 +11,7 @@ import {
 } from "@/lib/data/admin";
 import { adminSetPricing } from "@/lib/data/pricing";
 import { adminUpsertProduct, adminDeleteProduct } from "@/lib/data/products";
+import { adminSetStoreSettings } from "@/lib/data/orders";
 
 async function ensureAdmin() {
   if (!(await isAdmin())) throw new Error("No autorizado");
@@ -130,6 +131,22 @@ export async function deleteProduct(id: string) {
   await adminDeleteProduct(id.trim());
   revalidatePath("/");
   revalidatePath("/productos");
+  revalidatePath("/admin/productos");
+  return { ok: true };
+}
+
+
+const storeSettingsSchema = z.object({
+  shippingFlatArs: z.number().int().nonnegative(),
+  freeShippingThresholdArs: z.number().int().nonnegative().nullable(),
+});
+
+export async function updateStoreSettings(input: z.infer<typeof storeSettingsSchema>) {
+  await ensureAdmin();
+  const data = storeSettingsSchema.parse(input);
+  await adminSetStoreSettings(data);
+  revalidatePath("/productos");
+  revalidatePath("/checkout/tienda");
   revalidatePath("/admin/productos");
   return { ok: true };
 }
