@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CourseCard } from "@/components/course-card";
 import { COURSES } from "@/content/courses";
-import { getCurrentProfile } from "@/lib/auth/session";
+import { isAuthedHint } from "@/lib/auth/session";
 import { siteConfig, formatPrice } from "@/config/site.config";
 import { getPricing } from "@/lib/data/pricing";
 import { onlinePriceFor } from "@/lib/commerce/pricing";
@@ -16,8 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function CursosPage() {
-  const profile = await getCurrentProfile();
-  const authed = !!profile;
+  const authed = await isAuthedHint();
   const pricing = await getPricing();
 
   return (

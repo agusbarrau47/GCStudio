@@ -18,6 +18,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // PERFORMANCE: solo chequeamos sesion (getUser, red) en rutas protegidas.
+  // Las paginas publicas no hacen round-trip de auth al navegar.
+  if (!isProtected(pathname)) {
+    return NextResponse.next();
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(url, anon, {

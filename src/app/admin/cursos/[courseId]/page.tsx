@@ -5,6 +5,7 @@ import { getCourseById, countLessons } from "@/content/courses";
 import { getCourseStatus, getCourseVideoAssetId } from "@/lib/data/admin";
 import { CourseStatusToggle } from "@/components/admin/course-status-toggle";
 import { VideoAssetForm } from "@/components/admin/video-asset-form";
+import { VideoUploadForm } from "@/components/admin/video-upload-form";
 import { LessonTimestampForm } from "@/components/admin/lesson-timestamp-form";
 import { formatDuration } from "@/lib/utils";
 
@@ -44,10 +45,16 @@ export default async function AdminCourseDetailPage({
       <section className="mt-8 surface p-6">
         <h2 className="font-display text-xl text-ink">Video del curso</h2>
         <p className="mt-1 text-sm text-ink/60">
-          Pegá el UID del video ya subido a Cloudflare Stream. Se usa para todas las clases del curso.
+          Subí el video directo o, si ya lo tenés en Cloudflare Stream, pegá su UID. Se usa para todas las clases del curso.
         </p>
         <div className="mt-4">
-          <VideoAssetForm courseId={course.id} initialAssetId={assetId} />
+          <VideoUploadForm courseId={course.id} />
+        </div>
+        <div className="mt-4">
+          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink/45">O pegar UID manual</p>
+          <div className="mt-2">
+            <VideoAssetForm courseId={course.id} initialAssetId={assetId} />
+          </div>
         </div>
       </section>
 

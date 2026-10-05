@@ -16,6 +16,7 @@ export function AuthForm({
   const router = useRouter();
   const supabase = createSupabaseBrowserClient();
   const mock = !supabase;
+  const googleEnabled = process.env.NEXT_PUBLIC_GOOGLE_AUTH_ENABLED === "true";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -158,7 +159,7 @@ export function AuthForm({
                 : "Enviar enlace"}
       </button>
 
-      {(mode === "login" || mode === "register") && (
+      {googleEnabled && (mode === "login" || mode === "register") && (
         <>
           <div className="relative py-2 text-center">
             <span className="relative z-10 bg-transparent px-3 font-mono text-[10px] uppercase tracking-[0.2em] text-ink/40">

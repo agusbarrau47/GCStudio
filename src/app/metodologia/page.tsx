@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { getCurrentProfile } from "@/lib/auth/session";
+import { isAuthedHint } from "@/lib/auth/session";
 import { siteConfig } from "@/config/site.config";
 
 export const metadata: Metadata = {
@@ -59,8 +59,7 @@ const PILLARS = [
 ];
 
 export default async function MetodologiaPage() {
-  const profile = await getCurrentProfile();
-  const authed = !!profile;
+  const authed = await isAuthedHint();
 
   return (
     <>

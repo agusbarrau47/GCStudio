@@ -82,4 +82,8 @@ body {
   .link-nav {
     @apply font-mono text-[11px] uppercase tracking-[0.2em] text-ink/75 transition-colors hover:text-gold-dark font-medium;
   }
+
+  .in {
+    @apply w-full rounded-xl border border-ink/15 bg-ink/[0.03] px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-gold/60;
+  }
 }

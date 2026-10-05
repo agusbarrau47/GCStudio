@@ -63,3 +63,22 @@ export async function isAdmin(): Promise<boolean> {
   const p = await getCurrentProfile();
   return p?.role === "admin";
 }
+
+
+/**
+ * Hint de autenticación RÁPIDO para UI pública (header, CTAs).
+ * No llama a la red: en modo real detecta la cookie de sesión de Supabase;
+ * en mock usa la cookie de rol. No es una barrera de seguridad (eso lo hacen
+ * el middleware y getCurrentProfile en rutas protegidas), solo decide qué botón mostrar.
+ */
+export async function isAuthedHint(): Promise<boolean> {
+  if (isMockMode) {
+    if (!mockAccessAllowed()) return false;
+    const store = await cookies();
+    return !!store.get(MOCK_ROLE_COOKIE)?.value;
+  }
+  const store = await cookies();
+  return store.getAll().some(
+    (c) => /^sb-.*-auth-token(\.\d+)?$/.test(c.name) && c.value.length > 0
+  );
+}

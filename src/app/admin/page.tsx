@@ -47,6 +47,13 @@ export default async function AdminOverviewPage() {
           </p>
           <p className="mt-3 font-mono text-xs text-gold-dark/70">Modificar valores →</p>
         </Link>
+        <Link href="/admin/productos" className="surface p-6 transition-transform hover:-translate-y-1">
+          <h2 className="font-display text-xl text-ink">Tienda</h2>
+          <p className="mt-2 text-sm text-ink/60">
+            Agregar, editar o quitar productos e insumos de la tienda.
+          </p>
+          <p className="mt-3 font-mono text-xs text-gold-dark/70">Gestionar productos →</p>
+        </Link>
         <Link href="/admin/alumnos" className="surface p-6 transition-transform hover:-translate-y-1">
           <h2 className="font-display text-xl text-ink">Alumnos</h2>
           <p className="mt-2 text-sm text-ink/60">

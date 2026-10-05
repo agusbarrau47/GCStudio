@@ -10,6 +10,7 @@ import {
   adminSetLessonTimestamps,
 } from "@/lib/data/admin";
 import { adminSetPricing } from "@/lib/data/pricing";
+import { adminUpsertProduct, adminDeleteProduct } from "@/lib/data/products";
 
 async function ensureAdmin() {
   if (!(await isAdmin())) throw new Error("No autorizado");
@@ -91,5 +92,44 @@ export async function updatePricing(input: z.infer<typeof pricingSchema>) {
   revalidatePath("/cursos");
   revalidatePath("/admin/precios");
   revalidatePath("/admin/cursos");
+  return { ok: true };
+}
+
+
+const productSchema = z.object({
+  id: z.string().trim().optional(),
+  slug: z.string().trim().min(1, "Slug requerido").regex(/^[a-z0-9-]+$/, "Slug: solo minúsculas, números y guiones"),
+  name: z.string().trim().min(1),
+  category: z.string().trim().min(1),
+  priceArs: z.number().int().nonnegative().nullable(),
+  image: z.string().trim().nullable(),
+  badge: z.string().trim().nullable(),
+  shortDesc: z.string().trim().nullable(),
+  description: z.string().trim().nullable(),
+  benefits: z.array(z.string().trim()).max(12),
+  howToUse: z.string().trim().nullable(),
+  anmatApproved: z.boolean(),
+  stock: z.boolean(),
+  active: z.boolean(),
+  position: z.number().int().nonnegative(),
+});
+
+export async function upsertProduct(input: z.infer<typeof productSchema>) {
+  await ensureAdmin();
+  const data = productSchema.parse(input);
+  await adminUpsertProduct(data);
+  revalidatePath("/");
+  revalidatePath("/productos");
+  revalidatePath("/admin/productos");
+  return { ok: true };
+}
+
+export async function deleteProduct(id: string) {
+  await ensureAdmin();
+  if (!id || !id.trim()) throw new Error("id requerido");
+  await adminDeleteProduct(id.trim());
+  revalidatePath("/");
+  revalidatePath("/productos");
+  revalidatePath("/admin/productos");
   return { ok: true };
 }

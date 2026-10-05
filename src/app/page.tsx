@@ -4,13 +4,12 @@ import { SiteFooter } from "@/components/site-footer";
 import { CourseCard } from "@/components/course-card";
 import { GoogleReviews } from "@/components/google-reviews";
 import { COURSES } from "@/content/courses";
-import { PRODUCTS } from "@/content/products";
-import { getCurrentProfile } from "@/lib/auth/session";
+import { getProducts } from "@/lib/data/products";
+import { isAuthedHint } from "@/lib/auth/session";
 import { siteConfig } from "@/config/site.config";
 
 export default async function LandingPage() {
-  const profile = await getCurrentProfile();
-  const authed = !!profile;
+  const authed = await isAuthedHint();
 
   return (
     <>
@@ -318,8 +317,8 @@ function CursosSection() {
 
 /* ------------------------------------------- 2b. TIENDA / MARKETPLACE */
 
-function TiendaSection() {
-  const featured = PRODUCTS.slice(0, 4);
+async function TiendaSection() {
+  const featured = (await getProducts()).slice(0, 4);
 
   const formatPrice = (val: number) => {
     return new Intl.NumberFormat("es-AR", {

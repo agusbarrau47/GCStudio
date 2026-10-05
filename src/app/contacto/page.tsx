@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { GoogleReviews } from "@/components/google-reviews";
-import { getCurrentProfile } from "@/lib/auth/session";
+import { isAuthedHint } from "@/lib/auth/session";
 import { siteConfig } from "@/config/site.config";
 
 export const metadata: Metadata = {
@@ -13,8 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ContactoPage() {
-  const profile = await getCurrentProfile();
-  const authed = !!profile;
+  const authed = await isAuthedHint();
 
   return (
     <>
